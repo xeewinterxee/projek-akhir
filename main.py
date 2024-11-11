@@ -2,6 +2,7 @@ import csv
 import os
 from tools import loading
 import pwinput
+from prettytable import PrettyTable
 
 # file ekstra
 csv_file = 'gudang.csv'
@@ -23,7 +24,7 @@ def register():
         print("Username telah dipakai,silahkan coba lagi")
     else:
         password = pwinput.pwinput("Masukkan password baru: ")
-        akuns.append([username,password,"user"])
+        akuns.append([username,password,"user",])
         print(f"Akun Anda berhasil terdaftar dengan ID: {username}")
 # end register
 
@@ -83,11 +84,34 @@ def login():
 # start fitur
 
 # fitur admin
-def tambah_alat_admin():
-    pass
+def tambah_alat_admin(nama, tipe, stok):
+    with open("gudang.csv", mode="a", newline="") as file:
+        fieldnames = ["nama_barang", "tipe barang", "stok barang"]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+        writer.writerow({
+            "nama barang": nama, 
+            "tipe barang": tipe, 
+            "stok barang": stok
+        })
+    print(f"Data {nama} berhasil ditambahkan.")
 
 def lihat_alat_admin():
-    pass
+    try:
+        with open("gudang.csv", mode="r", newline="") as file:
+            csvreader = csv.DictReader(file)
+            data = list(csvreader)
+            if data:
+                table = PrettyTable()
+                table.field_names = data[0].keys()
+            else:
+                print("\nData kosong.")
+            for row in data:
+                table.add_row(row.values())
+                print(table)
+    except FileNotFoundError:
+        print("File tidak ditemukan, buat data baru terlebih dahulu.")
+
 
 def update_alat_admin():
     pass
