@@ -1,5 +1,6 @@
-nama_alat,tipe_alat,stok_alat
-Kabel,NYA,500
-Lampu,5 Watt,200
-Kunci,satu set L,30
-Laptop,Acer,90
+nomor,nama_barang,tipe_barang,stok_barang
+1,Kabel,NYA,500
+2,Lampu,5 Watt,200
+3,Kunci,satu set L,30
+4,Laptop,Acer,90
+5,laptop,rog,20

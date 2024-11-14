@@ -83,18 +83,23 @@ def login():
 
 # start fitur
 
-# fitur admin
-def tambah_alat_admin(nama, tipe, stok):
-    with open("gudang.csv", mode="a", newline="") as file:
-        fieldnames = ["nama_barang", "tipe barang", "stok barang"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-        writer.writerow({
-            "nama barang": nama, 
-            "tipe barang": tipe, 
-            "stok barang": stok
-        })
-    print(f"Data {nama} berhasil ditambahkan.")
+
+# fitur admin
+def tambah_alat_admin():
+    nama_barang = input("Masukkan nama barang: ")
+    tipe_barang = input("Masukkan tipe barang: ")
+    stok_barang = input("Masukkan stok barang: ")
+    with open("gudang.csv", mode="a", newline="") as file:
+            fieldnames = ["nomor", "nama_barang", "tipe_barang", "stok_barang"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+            writer.writerow({
+                "nama_barang": nama_barang, 
+                "tipe_barang": tipe_barang, 
+                "stok_barang": stok_barang
+            })
+            print(f"Data {nama_barang} berhasil ditambahkan.")
 
 def lihat_alat_admin():
     try:
@@ -108,14 +113,41 @@ def lihat_alat_admin():
                 print("\nData kosong.")
             for row in data:
                 table.add_row(row.values())
-                print(table)
+            print(table)
     except FileNotFoundError:
         print("File tidak ditemukan, buat data baru terlebih dahulu.")
 
 
 def update_alat_admin():
-    pass
+    nama_barang = input("Masukkan nama barang yang ingin diubah: ")
+    barang = False
+    with open("gudang.csv", "r", newline="") as file:
+        csvreader = csv.DictReader(file)
+        for row in csvreader:
+            if row["nama_barang"] == nama_barang:
+                barang = True
+                print(f"Barang ditemukan: {row['nama_barang']}, {row['tipe_barang']}, {row['stok_barang']}")
+                tipe_baru = input("Masukkan tipe baru: ")
+                stok_baru = input("Masukkan stok baru: ")
+                row["tipe_barang"] = tipe_baru
+                row["stok_barang"] = stok_baru
+            
+            
+                writer.writerows(row)
+    
+    if barang:
+        # Menyimpan data yang telah diperbarui ke dalam CSV
+        with open("gudang.csv", "w", newline="") as file:
+            fieldnames = ["nomor", "nama_barang", "tipe_barang", "stok_barang"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows()
+            
+        print(f"Data {nama_barang} berhasil diperbarui.")
+    else:
+        print(f"Barang dengan nama {nama_barang} tidak ditemukan.")
 
+                
 def hapus_alat_admin():
     pass
 
