@@ -22,42 +22,6 @@ def lihat_barang():
     except FileNotFoundError:
         print("File tidak ditemukan, buat data baru terlebih dahulu.")
 
-# def peminjaman_barang():
-#     lihat_barang()
-#     id_barang = input("Masukkan ID Barang: ")
-#     barang = False
-#     with open(gudang, mode="r", newline='', encoding="utf-8") as file:
-#         read = csv.DictReader(file)
-#         for row in read:
-#             if row["ID"] == id_barang:
-#                 barang = True
-#                 nama_user = input("Masukkan nama baru: ").capitalize()
-#                 stok_user = input("Masukkan stok baru: ")
-#                 jumlah_hari = int(input("Masukkan jumlah hari peminjaman: "))
-#                 tanggal_peminjaman = datetime.now()
-#                 print("Tanggal peminjaman:", tanggal_peminjaman.strftime("%Y-%m-%d"))
-#                 tanggal_pengembalian = tanggal_peminjaman + timedelta(days=jumlah_hari)
-#                 print("Tanggal pengembalian:", tanggal_pengembalian.strftime("%Y-%m-%d"))
-
-#                 row["nama"] = nama_user
-#                 row["id barang"] = id_barang
-#                 row["stok_user"] = stok_user
-#                 row["waktu awal minjam"] = tanggal_peminjaman
-#                 row["waktu akhir minjam"] = tanggal_pengembalian
-#                 print(f"Data barang dengan id:{id_barang} berhasil dipinjam.")
-#                 break
-            
-#         if barang:   
-#             with open('riwayat.csv','a',newline='') as file:
-#                 fieldname = ["nama","id barang","stok","waktu awal minjam","waktu akhir peminjaman"]
-#                 writer = csv.DictWriter(file,fieldnames=fieldname)
-#                 writer.writerow(row)
-#             print(f"Data {id_barang} berhasil diperbarui.")
-#         else:
-#             print(f"Barang dengan id:{id_barang} tidak ditemukan.")
-
-import csv
-from datetime import datetime, timedelta
 
 def peminjaman_barang():
     lihat_barang()  # Pastikan fungsi ini didefinisikan
