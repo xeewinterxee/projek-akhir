@@ -28,7 +28,7 @@ def menu():
         except ValueError:
             print("Input tidak valid. Harap masukkan angka.")
         except KeyboardInterrupt:
-            print("Keluar dari program secara paksa.")
+            print("\nKeluar dari program secara paksa.")
             break
 
 if __name__ == "__main__":

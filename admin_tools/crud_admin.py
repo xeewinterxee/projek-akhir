@@ -12,6 +12,9 @@ def tambah_barang():
         stok_barang = int(input("Masukkan stok barang: "))
         id_barang   = input("Masukkan id barang: ")
 
+        if not nama_barang or not tipe_barang or not id_barang:
+            raise ValueError("input valid tidak boleh kosong")
+
     except ValueError:
         print("input harus berupa angka")
     except KeyboardInterrupt:
@@ -86,29 +89,36 @@ def update_barang():
 
                 
 def hapus_barang():
-    hapus_barang = input("Masukkan ID Barang: ")
-    barang_dihapus = False
+    try:
+        hapus_barang = input("Masukkan ID Barang: ").strip()
+        if not hapus_barang:
+            raise ValueError("ID barang tidak boleh kosong.")
+        
+        barang_dihapus = False 
 
-    if barang_dihapus:
-        print(f"Barang dengan ID {hapus_barang} berhasil dihapus.")
-    else:
-        print(f"Barang dengan ID {hapus_barang} tidak ditemukan.")
+        with open(gudang, 'r', newline='', encoding="utf-8") as file:
+            read = csv.DictReader(file)
+            data_barang = [row for row in read]
 
-    with open(gudang, 'r', newline='', encoding="utf-8") as file:
-        read = csv.DictReader(file)
-        data_barang = [row for row in read]
+        with open(gudang, 'w', newline='', encoding="utf-8") as file:
+            fieldnames = ["nama barang", "tipe barang", "stok barang", "id"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-    with open(gudang, 'w', newline='', encoding="utf-8") as file:
-        fieldnames = ["nama barang", "tipe barang", "stok barang", "id"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
 
-        writer.writeheader()
+            for row in data_barang:
+                if row["id"] != hapus_barang:
+                    writer.writerow(row)
+                else:
+                    barang_dihapus = True
 
-        for row in data_barang:
-            if row["id"] != hapus_barang:
-                writer.writerow(row)
-            else:
-                barang_dihapus = True
+        if barang_dihapus:
+            print(f"Barang dengan ID {hapus_barang} berhasil dihapus.")
+        else:
+            print(f"Barang dengan ID {hapus_barang} tidak ditemukan.")
+    
+    except ValueError as e:
+        print(f"error: {e}")
 
 
 
